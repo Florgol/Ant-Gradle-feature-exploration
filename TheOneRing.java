@@ -1,5 +1,5 @@
 /**
- * Middle-earth magic and arithmetic.
+ * Middle-earth magic and arithmetic. The Ring has a will of its own.
  */
 
 public class TheOneRing {
