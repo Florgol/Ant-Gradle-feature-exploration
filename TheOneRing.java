@@ -1,3 +1,7 @@
+/**
+ * Middle-earth magic and arithmetic. The Ring has a will of its own.
+ */
+
 public class TheOneRing {
     private boolean isVisible = false;
 
