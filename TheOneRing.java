@@ -1,0 +1,69 @@
+public class TheOneRing {
+    private boolean isVisible = false;
+
+    /**
+     * When the ring is put on, it makes the bearer invisible.
+     */
+    public void putOn() {
+        isVisible = false;
+        System.out.println("You are invisible to all but the darkest most powerful beings...");
+    }
+
+    /**
+     * When the ring is removed, the bearer becomes visible again.
+     */
+    public void takeOff() {
+        isVisible = true;
+        System.out.println("You are visible once more. Drawing a breath as if your last, you know not to be whole again until you wear it..");
+    }
+
+    /**
+     * This method represents the sway of the ring over the bearer.
+     * It uses Elvish whispers to tempt the bearer.
+     */
+    public void swayTheBearer() {
+
+        System.out.println("Ash nazg durbatulûk, ash nazg gimbatul...");
+        System.out.println("Ash nazg thrakatulûk agh burzum-ishi krimpatul.");
+
+    }
+
+    /**
+     * This method showcases the power of the ring, 
+     * which is known to corrupt those around it.
+     */
+    public void corruptNearby() {
+        System.out.println("The ring emanates a dark power, drawing near those who seek it...");
+    }
+
+    /**
+     * This method represents the rings desire to be found,
+     * leading it to betray its current owner at the worst possible moment.
+     */
+    public void betrayBearer() {
+        System.out.println("The ring slips from your grasp... desiring to be found once more, it waits..");
+    }
+
+    /**
+     * Unbeknownst to many the ring is able solve simple math calculations on the spot,
+     * such as adding 2 Integers.
+     * 
+     * @param a The first integer to be added.
+     * @param b The second integer to be added.
+     * @return The sum of the two input integers.
+     */
+    
+    public int add2Numbers(int a, int b){
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        TheOneRing ring = new TheOneRing();
+        ring.putOn();
+        ring.swayTheBearer();
+        ring.corruptNearby();
+        ring.betrayBearer();
+        ring.takeOff();
+        ring.swayTheBearer();
+    }
+}
