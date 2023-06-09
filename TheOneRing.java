@@ -18,7 +18,7 @@ public class TheOneRing {
      */
     public void takeOff() {
         isVisible = true;
-        System.out.println("You are visible once more. Drawing a breath as if your last, you will not be whole unless you can wear it one more time.. ");
+        System.out.println("You are visible once more. Drawing a breath as if your last, you will not be whole unless you wear it again.. ");
     }
 
     /**
@@ -66,5 +66,9 @@ public class TheOneRing {
         ring.betrayBearer();
         ring.takeOff();
         ring.swayTheBearer();
+        System.out.println("On a nearby field you overhear a hobbit counting his cabbages: 
+        \"I have 27 on this side, and 15 over here .. so in total I have 52 cabbages\".");
+        System.out.println("In the dark speech of Mordor you hear the ring whisper: 
+        \"rubbish .. he actually has " + ring.add2Numbers(27,15) + " cabbages ..\"");
     }
 }
