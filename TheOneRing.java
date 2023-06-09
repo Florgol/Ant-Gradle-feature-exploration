@@ -58,6 +58,15 @@ public class TheOneRing {
         return a + b;
     }
 
+/**
+ * The main method of the application.
+ * We simulate the behaviour of the One Ring.
+ * The ring is created, put on, influences its bearer and surroundings, betrays its bearer, 
+ * is taken off and corrects a hobbit's mistaken cabbage count.
+ *
+ * @param args not used
+ */
+
     public static void main(String[] args) {
         TheOneRing ring = new TheOneRing();
         ring.putOn();
