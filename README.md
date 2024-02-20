@@ -1,4 +1,4 @@
-#Ant and Gradle Feature Exploration
+# Ant and Gradle Feature Exploration
 
 This is an exploration of the features of Ant and Gradle, two ways of implementing Buildmanagement. This exploration is part of my studies at the BHT (Berliner Hochschule für Technik).
 
