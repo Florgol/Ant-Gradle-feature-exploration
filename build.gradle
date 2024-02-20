@@ -1,0 +1,91 @@
+
+// Specifying plugins for project
+plugins {
+    id 'java'
+    id 'application'
+}
+
+// Specifying repositories where Gradle will look for dependencies.
+// mavenCentral() means that dependencies will be fetched from the Maven Central Repository.
+repositories {
+    mavenCentral()
+}
+
+// Specifying dependencies
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+// Configuring test task (from JUnit 5)
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+// Where to look for source files
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['img']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+    }
+}
+
+// Configuring jar task
+jar {
+    manifest {
+        attributes 'Main-Class': 'TheOneRing'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+// Specifying Main class
+mainClassName = 'TheOneRing'
+
+// Testing
+task createDirectory {
+    doLast {
+        file('testDir').mkdirs()
+    }
+}
+
+// Downloading necessary files
+task downloadFiles {
+    doLast {
+        // Downloading paths from my github repository
+        def srcFile1 = 'https://raw.githubusercontent.com/Florgol/AntFeatureExploration/main/img/theOneRing.png'
+        def srcFile2 = 'https://raw.githubusercontent.com/Florgol/AntFeatureExploration/main/TheOneRing.java'
+        def srcFile3 = 'https://raw.githubusercontent.com/Florgol/AntFeatureExploration/main/TheOneRingTest.java'
+        def dest1 = file('img/theOneRing.png')
+        def dest2 = file('src/TheOneRing.java')
+        def dest3 = file('test/TheOneRingTest.java')
+
+        // Create directories (in case they don't exist)
+        dest1.parentFile.mkdirs()
+        dest2.parentFile.mkdirs()
+        dest3.parentFile.mkdirs()
+
+        // Downloading files
+        dest1.bytes = new URL(srcFile1).bytes
+        dest2.bytes = new URL(srcFile2).bytes
+        dest3.bytes = new URL(srcFile3).bytes
+    }
+}
+
+// Invoking downloadFiles task before compiling 
+// I choose to do this here as an example
+// In case the project is set up in the right way, this can be useful
+compileJava.dependsOn downloadFiles

@@ -1,0 +1,115 @@
+<project basedir="." default="setup" name="HelloSWT">
+
+    <!-- set global properties -->
+    <property name="src.dir" location="src"/>
+    <property name="build.dir" location="build"/>
+    <property name="test.dir" location="test"/>
+    <property name="main-class" value="TheOneRing"/>
+    <property name="lib.dir" location="lib"/>
+    <property name="img.dir" location="img"/>
+
+    <!-- application test path (only needs access to the application classes)-->
+    <path id="application-classpath">
+        <pathelement location="${build.dir}"/>
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <!-- classpath for testing (needs access to both the application classes and test classes)-->
+    <path id="test-classpath">
+        <path refid="application-classpath"/>
+        <pathelement location="${build.dir}/test"/>
+    </path>
+
+    <!-- compiling tests -->
+    <target name="compile-tests" depends="compile">
+        <mkdir dir="${build.dir}/test"/>
+        <javac srcdir="${test.dir}" destdir="${build.dir}/test" classpathref="test-classpath" includeantruntime="false"/>
+    </target>
+
+    <!-- running tests -->
+    <target name="test" depends="compile-tests">
+        <junitlauncher printsummary="true" haltonfailure="no">
+            <classpath refid="test-classpath"/>
+            <testclasses>
+                <fileset dir="${build.dir}/test"/>
+            </testclasses>
+        </junitlauncher>
+    </target>
+
+    <!-- creating project directories -->
+    <target name="setup">
+        <mkdir dir="${src.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${test.dir}"/>
+        <mkdir dir="${lib.dir}"/>
+        <mkdir dir="${img.dir}"/>
+    </target>
+
+    <!-- deleting build directory -->
+    <target name="clean">
+        <echo message="Cleaning the project..."/>
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Compiling -->
+    <target name="compile" depends="clean">
+        <echo message="Compiling the project..."/>
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" classpathref="application-classpath"/>
+    </target>
+
+    <!-- Creating jar file -->
+    <target name="jar" depends="compile">
+        <echo message="Creating jar file..."/>
+        <jar destfile="${build.dir}/MyProject.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Running the application -->
+    <target name="run" depends="jar">
+        <echo message="Running the application..."/>
+        <java jar="${build.dir}/MyProject.jar" fork="true"/>
+    </target>
+
+    <!-- Generating documentation -->
+    <target name="doc" depends="clean-doc">
+        <mkdir dir="${build.dir}/docs"/>
+        <javadoc destdir="${build.dir}/docs">
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+            <classpath refid="application-classpath"/>
+        </javadoc>
+    </target>
+
+    <!-- Deleting documentation -->
+    <target name="clean-doc">
+        <delete dir="${build.dir}/docs"/>
+    </target>
+
+    <!-- getting necessary project files from my github account -->
+    <target name="get" depends="setup">
+        <echo message="Downloading..."/>
+
+        <!-- downloading the actual ring -->
+        <get src="https://raw.githubusercontent.com/Florgol/AntFeatureExploration/main/img/theOneRing.png"
+            dest="${img.dir}/theOneRing.png"/>
+
+        <!-- downloading main class and test class -->    
+        <get src="https://raw.githubusercontent.com/Florgol/AntFeatureExploration/main/TheOneRing.java"
+            dest="${src.dir}/TheOneRing.java"/>
+        <get src="https://raw.githubusercontent.com/Florgol/AntFeatureExploration/main/TheOneRingTest.java"
+            dest="${test.dir}/TheOneRingTest.java"/>
+
+        <!-- downloading jar files for testing -->
+        <get src="https://github.com/Florgol/AntFeatureExploration/raw/main/lib/junit-jupiter-api-5.8.1.jar"
+            dest="${lib.dir}/junit-jupiter-api-5.8.1.jar"/>
+        <get src="https://github.com/Florgol/AntFeatureExploration/raw/main/lib/junit-jupiter-engine-5.8.1.jar"
+            dest="${lib.dir}/junit-jupiter-engine-5.8.1.jar"/>
+        <get src="https://github.com/Florgol/AntFeatureExploration/raw/main/lib/junit-platform-console-standalone-1.8.1.jar"
+            dest="${lib.dir}/junit-platform-console-standalone-1.8.1.jar"/>
+        
+    </target>
+
+</project>
